@@ -7,10 +7,25 @@ import {
   EuiPageContentBody,
   EuiPageHeader,
   EuiSpacer,
+  EuiText,
   EuiTitle,
 } from '@elastic/eui';
-import { UrlForm } from './url_form';
-import { RisonForm } from './rison_form';
+import * as rison from 'rison';
+import { DecodeForm } from './form';
+import './forms.css';
+
+function decodeUrl({ inputValue }) {
+  return decodeURIComponent(inputValue);
+}
+
+function decodeRison({ inputValue }) {
+  try {
+    const decodeObj = rison.decode(inputValue);
+    return JSON.stringify(decodeObj);
+  } catch (err) {
+    return err;
+  }
+}
 
 export class Main extends React.Component {
   constructor(props) {
@@ -20,7 +35,7 @@ export class Main extends React.Component {
 
   render() {
     return (
-      <EuiPage>
+      <EuiPage className="reportingTools">
         <EuiPageBody>
           <EuiPageHeader>
             <EuiTitle size="l">
@@ -29,13 +44,18 @@ export class Main extends React.Component {
           </EuiPageHeader>
           <EuiPageContent>
             <EuiPageContentBody>
-              <EuiPanel>
-                <UrlForm />
-              </EuiPanel>
-              <EuiSpacer />
-              <EuiPanel>
-                <RisonForm />
-              </EuiPanel>
+              <EuiText>
+                <h3>URL Decoder</h3>
+                <EuiPanel>
+                  <DecodeForm decode={decodeUrl} />
+                </EuiPanel>
+                <EuiSpacer />
+
+                <h3>RISON Decoder</h3>
+                <EuiPanel>
+                  <DecodeForm decode={decodeRison} />
+                </EuiPanel>
+              </EuiText>
               <EuiSpacer />
             </EuiPageContentBody>
           </EuiPageContent>
