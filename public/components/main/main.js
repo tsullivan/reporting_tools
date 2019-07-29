@@ -1,22 +1,22 @@
 import React from 'react';
 import {
   EuiPage,
-  EuiPageHeader,
-  EuiTitle,
+  EuiPanel,
   EuiPageBody,
   EuiPageContent,
-  EuiPageContentHeader,
   EuiPageContentBody,
-  EuiText,
+  EuiPageHeader,
+  EuiSpacer,
+  EuiTitle,
 } from '@elastic/eui';
+import { UrlForm } from './url_form';
+import { RisonForm } from './rison_form';
 
 export class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
-
-  componentDidMount() {}
 
   render() {
     return (
@@ -28,16 +28,15 @@ export class Main extends React.Component {
             </EuiTitle>
           </EuiPageHeader>
           <EuiPageContent>
-            <EuiPageContentHeader>
-              <EuiTitle>
-                <h2>Congratulations</h2>
-              </EuiTitle>
-            </EuiPageContentHeader>
             <EuiPageContentBody>
-              <EuiText>
-                <h3>You have successfully created your first Kibana Plugin!</h3>
-                <p>The server time (via API call) is {this.state.time || 'NO API CALL YET'}</p>
-              </EuiText>
+              <EuiPanel>
+                <UrlForm />
+              </EuiPanel>
+              <EuiSpacer />
+              <EuiPanel>
+                <RisonForm />
+              </EuiPanel>
+              <EuiSpacer />
             </EuiPageContentBody>
           </EuiPageContent>
         </EuiPageBody>
