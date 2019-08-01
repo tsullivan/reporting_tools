@@ -4,6 +4,7 @@ import {
   EuiButton,
   EuiFlexGroup,
   EuiFlexItem,
+  EuiPanel,
   EuiTextArea,
 } from '@elastic/eui';
 
@@ -36,18 +37,18 @@ export class DecodeForm extends React.Component {
 
   render() {
     return (
-      <EuiFlexGroup gutterSize="m">
-        <EuiFlexItem grow={false}>
-          <EuiTextArea value={this.state.inputValue} onChange={this.changeInput} />
-        </EuiFlexItem>
-        <EuiFlexItem grow={false}>
-          <EuiButton size="s" onClick={this.codeRunner}>Decode</EuiButton>
-          <EuiButton size="s" onClick={this.clear}>Clear</EuiButton>
-        </EuiFlexItem>
-        <EuiFlexItem grow={true}>
-          <EuiTextArea value={this.state.outputValue} readOnly />
-        </EuiFlexItem>
-      </EuiFlexGroup>
+      <EuiPanel>
+        <EuiFlexGroup gutterSize="m">
+          <EuiFlexItem grow={true}>
+            <EuiTextArea value={this.state.inputValue} onChange={this.changeInput} />
+          </EuiFlexItem>
+          <EuiFlexItem grow={true}>
+            <EuiTextArea value={this.state.outputValue} readOnly />
+          </EuiFlexItem>
+        </EuiFlexGroup>
+        <EuiButton size="s" onClick={this.codeRunner}>Decode</EuiButton>
+        <EuiButton size="s" onClick={this.clear}>Clear</EuiButton>
+      </EuiPanel>
     );
   }
 }

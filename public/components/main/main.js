@@ -1,10 +1,11 @@
 import React from 'react';
 import {
   EuiPage,
-  EuiPanel,
   EuiPageBody,
   EuiPageContent,
   EuiPageContentBody,
+  EuiFlexGroup,
+  EuiFlexItem,
   EuiPageHeader,
   EuiSpacer,
   EuiText,
@@ -12,7 +13,6 @@ import {
 } from '@elastic/eui';
 import * as rison from 'rison';
 import { DecodeForm } from './form';
-import './forms.css';
 
 function decodeUrl({ inputValue }) {
   return decodeURIComponent(inputValue);
@@ -27,10 +27,53 @@ function decodeRison({ inputValue }) {
   }
 }
 
+function decodeJSON({ inputValue }) {
+  try {
+    const jsonObj = JSON.parse(inputValue);
+    return rison.encode(jsonObj);
+  } catch (err) {
+    return err;
+  }
+}
+
 export class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+
+  renderForms() {
+    return (
+      <React.Fragment>
+        <EuiFlexGroup>
+          <EuiFlexItem>
+            <EuiText>
+              <h3>URL Decoder</h3>
+              <p>Paste Kibana App State or Reporting JobParams to get RISON</p>
+              <DecodeForm decode={decodeUrl} />
+              <EuiSpacer />
+            </EuiText>
+          </EuiFlexItem>
+          <EuiFlexItem>
+            <EuiText>
+              <h3>JSON Decoder</h3>
+              <p>Paste JSON to get RISON</p>
+              <DecodeForm decode={decodeJSON} />
+            </EuiText>
+          </EuiFlexItem>
+        </EuiFlexGroup>
+        <EuiFlexGroup>
+          <EuiFlexItem>
+            <EuiText>
+              <h3>RISON Decoder</h3>
+              <p>Paste RISON to get JSON</p>
+              <DecodeForm decode={decodeRison} />
+              <EuiSpacer />
+            </EuiText>
+          </EuiFlexItem>
+        </EuiFlexGroup>
+      </React.Fragment>
+    );
   }
 
   render() {
@@ -44,19 +87,7 @@ export class Main extends React.Component {
           </EuiPageHeader>
           <EuiPageContent>
             <EuiPageContentBody>
-              <EuiText>
-                <h3>URL Decoder</h3>
-                <EuiPanel>
-                  <DecodeForm decode={decodeUrl} />
-                </EuiPanel>
-                <EuiSpacer />
-
-                <h3>RISON Decoder</h3>
-                <EuiPanel>
-                  <DecodeForm decode={decodeRison} />
-                </EuiPanel>
-              </EuiText>
-              <EuiSpacer />
+              {this.renderForms()}
             </EuiPageContentBody>
           </EuiPageContent>
         </EuiPageBody>
