@@ -12,19 +12,13 @@
   },
   "scripts": {
     "preinstall": "node ../../preinstall_check",
-    "kbn": "node ../../scripts/kbn",
-    "es": "node ../../scripts/es",
-    "lint": "eslint .",
-    "start": "plugin-helpers start",
-    "test:server": "plugin-helpers test:server",
-    "test:browser": "plugin-helpers test:browser",
-    "build": "plugin-helpers build"
+    "lint": "eslint ."
   },
   "devDependencies": {
     "@elastic/eslint-config-kibana": "link:../../packages/eslint-config-kibana",
     "@elastic/eslint-import-resolver-kibana": "link:../../packages/kbn-eslint-import-resolver-kibana",
     "@kbn/expect": "link:../../packages/kbn-expect",
-    "@kbn/plugin-helpers": "link:../../packages/kbn-plugin-helpers",
+    "@kbn/test": "link:../../packages/kbn-test",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
     "babel-eslint": "^10.0.1",
