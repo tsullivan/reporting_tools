@@ -1,10 +1,8 @@
 import { resolve } from 'path';
 import { existsSync } from 'fs';
-
-
 import { i18n } from '@kbn/i18n';
 
-export default function (kibana) {
+export default function(kibana): void {
   return new kibana.Plugin({
     require: ['elasticsearch'],
     name: 'reporting_tools',
@@ -14,16 +12,19 @@ export default function (kibana) {
         description: 'This is a tools UI for Reporting',
         main: 'plugins/reporting_tools/app',
       },
-      styleSheetPaths: [resolve(__dirname, 'public/app.scss'), resolve(__dirname, 'public/app.css')].find(p => existsSync(p)),
+      styleSheetPaths: [
+        resolve(__dirname, 'public/app.scss'),
+        resolve(__dirname, 'public/app.css'),
+      ].find((p: string): boolean => existsSync(p)),
     },
 
-    config(Joi) {
+    config(Joi): void {
       return Joi.object({
         enabled: Joi.boolean().default(true),
       }).default();
     },
 
-    init(server, options) { // eslint-disable-line no-unused-vars
+    async init(server): Promise<void> {
       const xpackMainPlugin = server.plugins.xpack_main;
       if (xpackMainPlugin) {
         const featureId = 'reporting_tools';
@@ -57,7 +58,6 @@ export default function (kibana) {
           },
         });
       }
-
-    }
+    },
   });
 }
