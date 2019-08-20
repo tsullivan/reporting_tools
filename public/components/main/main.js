@@ -18,6 +18,10 @@ function decodeUrl({ inputValue }) {
   return decodeURIComponent(inputValue);
 }
 
+function encodeUrl({ inputValue }) {
+  return encodeURIComponent(inputValue);
+}
+
 function decodeRison({ inputValue }) {
   try {
     const decodeObj = rison.decode(inputValue);
@@ -27,7 +31,7 @@ function decodeRison({ inputValue }) {
   }
 }
 
-function decodeJSON({ inputValue }) {
+function encodeRison({ inputValue }) {
   try {
     const jsonObj = JSON.parse(inputValue);
     return rison.encode(jsonObj);
@@ -45,31 +49,29 @@ export class Main extends React.Component {
   renderForms() {
     return (
       <React.Fragment>
+        <h3>Decoders</h3>
         <EuiFlexGroup>
           <EuiFlexItem>
-            <EuiText>
-              <h3>URL Decoder</h3>
-              <p>Paste Kibana App State or Reporting JobParams to get RISON</p>
-              <DecodeForm decode={decodeUrl} />
-              <EuiSpacer />
-            </EuiText>
+            <p>URL Decode: Paste Kibana App State or Reporting JobParams to get RISON</p>
+            <DecodeForm decode={decodeUrl} />
+            <EuiSpacer />
           </EuiFlexItem>
           <EuiFlexItem>
-            <EuiText>
-              <h3>JSON Decoder</h3>
-              <p>Paste JSON to get RISON</p>
-              <DecodeForm decode={decodeJSON} />
-            </EuiText>
+            <p>JSON Decode: Paste RISON to get JSON</p>
+            <DecodeForm decode={decodeRison} />
+            <EuiSpacer />
           </EuiFlexItem>
         </EuiFlexGroup>
+
+        <h3>Encoders</h3>
         <EuiFlexGroup>
           <EuiFlexItem>
-            <EuiText>
-              <h3>RISON Decoder</h3>
-              <p>Paste RISON to get JSON</p>
-              <DecodeForm decode={decodeRison} />
-              <EuiSpacer />
-            </EuiText>
+            <p>RISON Encode: Paste JSON to get RISON</p>
+            <DecodeForm decode={encodeRison} />
+          </EuiFlexItem>
+          <EuiFlexItem>
+            <p>URL Encode: Paste RISON to get Kibana URL</p>
+            <DecodeForm decode={encodeUrl} />
           </EuiFlexItem>
         </EuiFlexGroup>
       </React.Fragment>
@@ -87,7 +89,9 @@ export class Main extends React.Component {
           </EuiPageHeader>
           <EuiPageContent>
             <EuiPageContentBody>
-              {this.renderForms()}
+              <EuiText>
+                {this.renderForms()}
+              </EuiText>
             </EuiPageContentBody>
           </EuiPageContent>
         </EuiPageBody>
