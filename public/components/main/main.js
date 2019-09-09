@@ -53,12 +53,12 @@ export class Main extends React.Component {
         <EuiFlexGroup>
           <EuiFlexItem>
             <p>URL Decode: Paste Kibana App State or Reporting JobParams to get RISON</p>
-            <DecodeForm decode={decodeUrl} />
+            <DecodeForm decode={decodeUrl} buttonText="Decode" />
             <EuiSpacer />
           </EuiFlexItem>
           <EuiFlexItem>
             <p>JSON Decode: Paste RISON to get JSON</p>
-            <DecodeForm decode={decodeRison} />
+            <DecodeForm decode={decodeRison} buttonText="Decode" />
             <EuiSpacer />
           </EuiFlexItem>
         </EuiFlexGroup>
@@ -67,11 +67,11 @@ export class Main extends React.Component {
         <EuiFlexGroup>
           <EuiFlexItem>
             <p>RISON Encode: Paste JSON to get RISON</p>
-            <DecodeForm decode={encodeRison} />
+            <DecodeForm decode={encodeRison} buttonText="Encode" />
           </EuiFlexItem>
           <EuiFlexItem>
             <p>URL Encode: Paste RISON to get Kibana URL</p>
-            <DecodeForm decode={encodeUrl} />
+            <DecodeForm decode={encodeUrl} buttonText="Encode" />
           </EuiFlexItem>
         </EuiFlexGroup>
       </React.Fragment>

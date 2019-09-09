@@ -46,7 +46,7 @@ export class DecodeForm extends React.Component {
             <EuiTextArea value={this.state.outputValue} readOnly />
           </EuiFlexItem>
         </EuiFlexGroup>
-        <EuiButton size="s" onClick={this.codeRunner}>Decode</EuiButton>
+        <EuiButton size="s" onClick={this.codeRunner}>{this.props.buttonText}</EuiButton>
         <EuiButton size="s" onClick={this.clear}>Clear</EuiButton>
       </EuiPanel>
     );
@@ -55,4 +55,5 @@ export class DecodeForm extends React.Component {
 
 DecodeForm.propTypes = {
   decode: PropTypes.func.isRequired,
+  buttonText: PropTypes.string.isRequired,
 };
