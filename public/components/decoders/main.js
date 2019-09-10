@@ -1,15 +1,8 @@
 import React from 'react';
 import {
-  EuiPage,
-  EuiPageBody,
-  EuiPageContent,
-  EuiPageContentBody,
   EuiFlexGroup,
   EuiFlexItem,
-  EuiPageHeader,
   EuiSpacer,
-  EuiText,
-  EuiTitle,
 } from '@elastic/eui';
 import * as rison from 'rison';
 import { DecodeForm } from './form';
@@ -40,13 +33,13 @@ function encodeRison({ inputValue }) {
   }
 }
 
-export class Main extends React.Component {
+export class Decoders extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
-  renderForms() {
+  render() {
     return (
       <React.Fragment>
         <h3>Decoders</h3>
@@ -75,27 +68,6 @@ export class Main extends React.Component {
           </EuiFlexItem>
         </EuiFlexGroup>
       </React.Fragment>
-    );
-  }
-
-  render() {
-    return (
-      <EuiPage className="reportingTools">
-        <EuiPageBody>
-          <EuiPageHeader>
-            <EuiTitle size="l">
-              <h1>Reporting Tools</h1>
-            </EuiTitle>
-          </EuiPageHeader>
-          <EuiPageContent>
-            <EuiPageContentBody>
-              <EuiText>
-                {this.renderForms()}
-              </EuiText>
-            </EuiPageContentBody>
-          </EuiPageContent>
-        </EuiPageBody>
-      </EuiPage>
     );
   }
 }
