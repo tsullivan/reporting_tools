@@ -1,8 +1,9 @@
 import { resolve } from 'path';
 import { existsSync } from 'fs';
-import { i18n } from '@kbn/i18n';
+import { LegacyPluginSpec } from '../../src/legacy/plugin_discovery/types';
+import { initPlugin } from './init';
 
-export default function(kibana): void {
+export default function(kibana): LegacyPluginSpec {
   return new kibana.Plugin({
     require: ['elasticsearch'],
     name: 'reporting_tools',
@@ -24,40 +25,6 @@ export default function(kibana): void {
       }).default();
     },
 
-    async init(server): Promise<void> {
-      const xpackMainPlugin = server.plugins.xpack_main;
-      if (xpackMainPlugin) {
-        const featureId = 'reporting_tools';
-
-        xpackMainPlugin.registerFeature({
-          id: featureId,
-          name: i18n.translate('reportingTools.featureRegistry.featureName', {
-            defaultMessage: 'reporting-tools',
-          }),
-          navLinkId: featureId,
-          icon: 'questionInCircle',
-          app: [featureId, 'kibana'],
-          catalogue: [],
-          privileges: {
-            all: {
-              api: [],
-              savedObject: {
-                all: [],
-                read: [],
-              },
-              ui: ['show'],
-            },
-            read: {
-              api: [],
-              savedObject: {
-                all: [],
-                read: [],
-              },
-              ui: ['show'],
-            },
-          },
-        });
-      }
-    },
+    init: initPlugin,
   });
 }
