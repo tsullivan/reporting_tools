@@ -1,8 +1,8 @@
-import { Logger } from './server/lib/logger';
+import { Logger } from './lib/logger';
 import { getFeature } from './feature';
 import { registerTaskDefinitions } from './register_tasks';
 import { scheduleAutoTasks } from './schedule_auto';
-import { registerRoutes } from './server/routes';
+import { registerRoutes } from './routes';
 
 export function initPlugin(server): void {
   const logger = new Logger(server);

@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 import { existsSync } from 'fs';
 import { LegacyPluginSpec } from '../../src/legacy/plugin_discovery/types';
-import { initPlugin } from './init';
+import { initPlugin } from './server/init';
 
 export default function(kibana): LegacyPluginSpec {
   return new kibana.Plugin({
