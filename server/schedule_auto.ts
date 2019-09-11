@@ -1,5 +1,5 @@
-import { Logger } from './server/lib/logger';
-import { TaskManager } from '../../x-pack/legacy/plugins/task_manager/task_manager';
+import { Logger } from './lib/logger';
+import { TaskManager } from '../../../x-pack/legacy/plugins/task_manager/task_manager';
 
 export async function scheduleAutoTasks(taskManager: TaskManager, logger: Logger): Promise<void> {
   const existingTask = await taskManager.fetch({
@@ -8,13 +8,14 @@ export async function scheduleAutoTasks(taskManager: TaskManager, logger: Logger
 
   if (existingTask.docs.length === 0) {
     try {
-      await taskManager.schedule({
+      const task = await taskManager.schedule({
         id: 'xpack_kibana_reporting_updateReportingStats',
         taskType: 'updateReportingStats',
         params: {},
         state: {},
       });
-      logger.info('task was scheduled');
+      logger.info(`Task was scheduled: ${task.id}`);
+
     } catch(err) {
       logger.info('task schedulnmg failede');
     }
