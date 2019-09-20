@@ -1,4 +1,5 @@
 import { Logger } from './lib/logger';
+import { getExampleJson } from './lib/suricata';
 import { getFeature } from './feature';
 import { registerTaskDefinitions } from './register_tasks';
 import { scheduleAutoTasks } from './schedule_auto';

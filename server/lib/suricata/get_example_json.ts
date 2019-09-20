@@ -1,4 +1,5 @@
 import { sample } from 'lodash';
+import { ExampleData } from './index.d';
 import {
   log_file_path,
   destination_port,
@@ -23,7 +24,7 @@ interface CityData {
 const location_data: { src: CityData[]; dest: CityData[] } = require('./cities.json');
 const { src: src_cities, dest: dest_cities } = location_data;
 
-export const getExampleJson = () => {
+export const getExampleJson = (): ExampleData => {
   const src = sample(src_cities);
   const dest = sample(dest_cities);
 
@@ -161,5 +162,3 @@ export const getExampleJson = () => {
     },
   };
 };
-
-const makeFilebeatDoc = () => {};
