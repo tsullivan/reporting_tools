@@ -1,17 +1,16 @@
-import { TaskManager } from '../../x-pack/legacy/plugins/task_manager';
+import { TaskManager } from '../../../x-pack/legacy/plugins/task_manager';
 import {
   RunContext,
   CancellableTask,
   RunResult,
-} from '../../x-pack/legacy/plugins/task_manager/task';
-import { Logger } from './server/lib/logger';
+} from '../../../x-pack/legacy/plugins/task_manager/task';
+import { Logger } from './lib/logger';
 
 export function registerTaskDefinitions(server, taskManager: TaskManager, logger: Logger): void {
   taskManager.registerTaskDefinitions({
-    updateReportingStats: {
-      // this will be a task that gets a summary of reporting stuff, cache as last state for later retrieval by an API caller
-      type: 'xpack_kibana_reporting',
-      title: 'Update Reporting Stats',
+    mapsBeat: {
+      type: 'xpack_kibana_reportingtools',
+      title: 'Ingest Maps Data',
       createTaskRunner({ taskInstance: { params: taskParams, state: taskState } }: RunContext): CancellableTask {
         return {
           async run(): Promise<RunResult> {
