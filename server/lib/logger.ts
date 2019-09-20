@@ -9,4 +9,16 @@ export class Logger {
   public info(message): void {
     return this.log(['info'], message);
   }
+
+  public warn(message): void {
+    return this.log(['info'], message);
+  }
+
+  public error(message): void {
+    return this.log(['info'], message);
+  }
+
+  public debug(message): void {
+    return this.log(['info'], message);
+  }
 }

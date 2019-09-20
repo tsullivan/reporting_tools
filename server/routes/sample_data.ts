@@ -1,7 +1,7 @@
 import { getExampleJson } from '../lib/suricata';
 import { ExampleData } from '../lib/suricata/index.d';
 
-export function registerSampleData(server): void {
+export function registerSampleData(server, logger): void {
   server.route({
     path: '/api/reporting-sampledata',
     method: 'GET',

@@ -2,7 +2,7 @@ interface ListingResponse {
   list: string[];
 }
 
-export function registerListReports(server): void {
+export function registerListReports(server, logger): void {
   server.route({
     path: '/api/reporting-schedulization/list-reports',
     method: 'GET',

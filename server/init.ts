@@ -17,7 +17,7 @@ export function initPlugin(server): void {
   if (xpackMainPlugin) {
     xpackMainPlugin.registerFeature(getFeature('reporting_schedulization'));
     registerTaskDefinitions(server, taskManager, logger);
-    registerRoutes(server);
+    registerRoutes(server, logger);
 
     const { kbnServer } = server.plugins.xpack_main.status.plugin;
     kbnServer.afterPluginsInit((): void => {
