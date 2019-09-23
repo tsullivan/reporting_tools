@@ -1,1 +1,1 @@
-export { getExampleJson } from './get_example_json';
+export { fakeSuricataIngestTask } from './task';

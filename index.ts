@@ -22,6 +22,7 @@ export default function(kibana): LegacyPluginSpec {
     config(Joi): void {
       return Joi.object({
         enabled: Joi.boolean().default(true),
+        ingestAuth: Joi.string().default(`Basic ${Buffer.from('elastic:changeme').toString('base64')}`)
       }).default();
     },
 

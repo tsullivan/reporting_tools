@@ -20,9 +20,7 @@ export function initPlugin(server): void {
     registerRoutes(server, logger);
 
     const { kbnServer } = server.plugins.xpack_main.status.plugin;
-    kbnServer.afterPluginsInit((): void => {
-      scheduleAutoTasks(taskManager, logger);
-    });
+    scheduleAutoTasks(taskManager, logger);
   }
 }
 
