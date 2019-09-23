@@ -1,14 +1,19 @@
+import * as fs from 'fs';
+import * as path from 'path';
+import { promisify } from 'util';
 import { get as getGuarded } from 'lodash';
 import {
   RunContext,
   CancellableTask,
   RunResult,
 } from '../../../../../x-pack/legacy/plugins/task_manager/task';
-import { MAPS_INGEST_TASK_TYPE } from '../../../constants';
+import { MAPS_INGEST_TEMPLATE_NAME, MAPS_INGEST_TASK_TYPE } from '../../../constants';
 import { Logger } from '../logger';
 import { getExampleJson } from './get_example_json';
 
-export const fakeSuricataIngestTask = (server, logger: Logger) => {
+const readFile = promisify(fs.readFile);
+
+export const fakeSuricataIngestTask = async (server, logger: Logger) => {
   const config = server.config();
   const { elasticsearch } = server.plugins;
   const { callWithRequest: callEs } = elasticsearch.getCluster('data');
@@ -16,7 +21,12 @@ export const fakeSuricataIngestTask = (server, logger: Logger) => {
     headers: { authorization: config.get('reporting_tools.ingestAuth') },
   };
 
-  // TODO: putTemplate
+  // putTemplate
+  const templateJson = await readFile(path.join(__dirname, 'template.json'), 'utf8');
+  await callEs(fakeReq, 'indices.putTemplate', {
+    name: MAPS_INGEST_TEMPLATE_NAME,
+    body: templateJson,
+  });
 
   return {
     [MAPS_INGEST_TASK_TYPE]: {
@@ -37,7 +47,7 @@ export const fakeSuricataIngestTask = (server, logger: Logger) => {
             ];
 
             // ingest data
-            const esResponse = await callEs(fakeReq, 'index', {
+            await callEs(fakeReq, 'index', {
               index: `filebeat-${nowYear}.${nowMonth}.${nowDay}`,
               body: getExampleJson(),
             });
