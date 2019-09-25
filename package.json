@@ -15,8 +15,6 @@
     "lint": "eslint ."
   },
   "devDependencies": {
-    "@elastic/eslint-config-kibana": "link:../../packages/eslint-config-kibana",
-    "@elastic/eslint-import-resolver-kibana": "link:../../packages/kbn-eslint-import-resolver-kibana",
     "@kbn/expect": "link:../../packages/kbn-expect",
     "@kbn/test": "link:../../packages/kbn-test",
     "@typescript-eslint/eslint-plugin": "^1.13.0",

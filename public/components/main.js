@@ -15,6 +15,7 @@ import {
 } from '@elastic/eui';
 
 import { Decoders } from './decoders';
+import { Performance } from './performance';
 
 export class Main extends React.Component {
   constructor(props) {
