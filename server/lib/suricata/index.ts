@@ -1,1 +1,0 @@
-export { fakeSuricataIngestTask } from './task';
