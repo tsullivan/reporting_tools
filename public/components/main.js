@@ -15,7 +15,6 @@ import {
 } from '@elastic/eui';
 
 import { Decoders } from './decoders';
-import { Schedulizer } from './schedulizer';
 
 export class Main extends React.Component {
   constructor(props) {
@@ -23,8 +22,8 @@ export class Main extends React.Component {
 
     this.tabs = [
       {
-        id: 'schedulizer',
-        name: 'PDF Schduling',
+        id: 'performance',
+        name: 'Performance',
         disabled: false,
       },
       {
@@ -35,7 +34,7 @@ export class Main extends React.Component {
     ];
 
     this.state = {
-      selectedTabId: 'schedulizer',
+      selectedTabId: 'performance',
     };
   }
 
@@ -62,7 +61,7 @@ export class Main extends React.Component {
     if (this.state.selectedTabId === 'decoders') {
       return <Decoders/>;
     }
-    return <Schedulizer/>;
+    return <Performance/>;
   }
 
   render() {

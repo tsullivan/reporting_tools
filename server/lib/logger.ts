@@ -3,7 +3,7 @@ export class Logger {
 
   public constructor(server) {
     this.log = (tags: string[], message: string): void =>
-      server.log(['reporting_schedulizer', ...tags], message);
+      server.log(['reporting_tools', ...tags], message);
   }
 
   public info(message): void {
