@@ -15,20 +15,19 @@ export class Schedulizer extends React.Component {
 
   async sendRequest() {
     const list = await kfetch({
-      pathname: '/api/reporting-schedulization/list-reports',
-      method: 'GET',
+      pathname: '/api/reporting-performance/test',
+      method: 'POST',
     });
-    console.log(list);
   }
 
   render() {
     return (
       <React.Fragment>
-        <h3>Scheduling PDF</h3>
+        <h3>Test Headless</h3>
         <EuiFlexGroup>
           <EuiFlexItem grow={false}>
             <EuiButton onClick={this.sendRequest}>
-              Send a test Request
+              Run a Test
             </EuiButton>
           </EuiFlexItem>
         </EuiFlexGroup>
