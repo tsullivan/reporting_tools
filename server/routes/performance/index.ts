@@ -1,28 +1,30 @@
 import { Browser } from 'puppeteer';
 import { createBrowserDriverFactory } from '../../../../../x-pack/legacy/plugins/reporting/server/browsers';
-import { Logger as LevelLogger } from '../../../../../x-pack/legacy/plugins/reporting/types';
-import { Logger } from '../../lib/logger';
+import { LevelLogger } from '../../../../../x-pack/legacy/plugins/reporting/server/lib/level_logger';
 
-export async function registerPerformanceTesting(server, logger: Logger): Promise<void> {
+interface ApiResult {
+  ok: boolean;
+}
+
+export async function registerPerformanceTesting(server, logger: LevelLogger): Promise<void> {
   const browserFactory = await createBrowserDriverFactory(server);
 
   // get chromium instance
   server.route({
     path: '/api/reporting-performance/run',
     method: 'POST',
-    async handler() {
-    return browserFactory
-      .test({ viewport: { width: 800, height: 600 } }, logger as unknown as LevelLogger)
-      .then((browser: Browser | null) => {
-        if (browser && browser.close) {
-          logger.info('The browser has opened. Closing now...');
-          browser.close();
-        } else {
-          throw new Error('Could not close browser client handle!');
-        }
-      })
-      .then(() => ({ ok: true }));
+    async handler(): Promise<ApiResult> {
+      return browserFactory
+        .test({ viewport: { width: 800, height: 600 } }, logger)
+        .then((browser: Browser | null): void => {
+          if (browser && browser.close) {
+            logger.info('The browser has opened. Closing now...');
+            console.log(browser.close());
+          } else {
+            throw new Error('Could not close browser client handle!');
+          }
+        })
+        .then((): ApiResult => ({ ok: true }));
     },
   });
 }
-
