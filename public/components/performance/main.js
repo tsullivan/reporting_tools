@@ -35,7 +35,7 @@ export class Performance extends React.Component {
         body: JSON.stringify({ 'test_url': testUrl }) // prettier-ignore
       });
     } catch (err) {
-      this.setState(() => ({ resultText: err.toString() }));
+      this.setState(() => ({ isLoading: false, resultText: err }));
       return;
     }
 
@@ -101,7 +101,7 @@ export class Performance extends React.Component {
               <EuiSpacer />
 
               <EuiFormRow label="Result">
-                <EuiTextArea value={this.state.resultText || ''} readOnly />
+                <EuiTextArea value={this.state.resultText || ''} readOnly isInvalid />
               </EuiFormRow>
             </EuiForm>
           </EuiFlexItem>

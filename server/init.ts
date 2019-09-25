@@ -13,4 +13,3 @@ export function initPlugin(server): void {
     registerRoutes(server, logger);
   }
 }
-
