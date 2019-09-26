@@ -16,7 +16,7 @@ export class Performance extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { testUrl: '', isLoading: false, resultText: null };
+    this.state = { testUrl: '', isLoading: false, resultText: null, isError: false };
 
     this.onChangeUrl = this.onChangeUrl.bind(this);
     this.onClick = this.onClick.bind(this);
@@ -35,7 +35,7 @@ export class Performance extends React.Component {
         body: JSON.stringify({ 'test_url': testUrl }) // prettier-ignore
       });
     } catch (err) {
-      this.setState(() => ({ isLoading: false, resultText: err }));
+      this.setState(() => ({ isLoading: false, resultText: err, isError: true }));
       return;
     }
 
@@ -53,6 +53,7 @@ export class Performance extends React.Component {
   }
 
   onClick() {
+    this.setState(() => ({ resultText: '', isError: false }));
     this.sendRequest();
   }
 
@@ -101,7 +102,11 @@ export class Performance extends React.Component {
               <EuiSpacer />
 
               <EuiFormRow label="Result">
-                <EuiTextArea value={this.state.resultText || ''} readOnly isInvalid />
+                <EuiTextArea
+                  value={this.state.resultText || ''}
+                  readOnly
+                  isInvalid={this.state.isError}
+                />
               </EuiFormRow>
             </EuiForm>
           </EuiFlexItem>
