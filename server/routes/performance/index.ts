@@ -2,7 +2,8 @@ import * as Joi from 'joi';
 import { boomify } from 'boom';
 import { Request } from 'hapi';
 import { LevelLogger } from '../../../../../x-pack/legacy/plugins/reporting/server/lib/level_logger';
-import { getRunner, PerformanceMetrics } from '../../lib/performance';
+import { PerformanceMetrics } from '../../../../../x-pack/legacy/plugins/reporting/export_types/common/lib/screenshots/types';
+import { getRunner } from '../../lib/performance';
 
 export async function registerPerformanceTesting(server, logger: LevelLogger): Promise<void> {
   const runner = getRunner(server, logger);

@@ -1,13 +1,13 @@
-import * as Rx from 'rxjs';
-import { catchError, concatMap, take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { ConditionalHeaders } from '../../../../../x-pack/legacy/plugins/reporting/types';
-import { ScreenshotObservableOpts } from '../../../../../x-pack/legacy/plugins/reporting/export_types/common/lib/screenshots/types';
+import {
+  ScreenshotObservableOpts,
+  Screenshot,
+  PerformanceMetrics,
+} from '../../../../../x-pack/legacy/plugins/reporting/export_types/common/lib/screenshots/types';
 import { LevelLogger } from '../../../../../x-pack/legacy/plugins/reporting/server/lib/level_logger';
-import { HeadlessChromiumDriverFactory } from '../../../../../x-pack/legacy/plugins/reporting/server/browsers/chromium/driver_factory';
-import { HeadlessChromiumDriver } from '../../../../../x-pack/legacy/plugins/reporting/server/browsers/chromium/driver/chromium_driver';
 import { screenshotsObservableFactory } from '../../../../../x-pack/legacy/plugins/reporting/export_types/common/lib/screenshots';
 import { PreserveLayout } from '../../../../../x-pack/legacy/plugins/reporting/export_types/common/layouts/preserve_layout';
-import { PerformanceMetrics } from './';
 
 function getConditionals(server): ConditionalHeaders['conditions'] {
   const config = server.config();
@@ -20,16 +20,18 @@ function getConditionals(server): ConditionalHeaders['conditions'] {
   return { hostname: hostname.toLowerCase(), port, basePath, protocol };
 }
 
+type PluginScreenshotObservable =  ({ logger, url, conditionalHeaders, layout, browserTimezone, }: ScreenshotObservableOpts) => Observable<{ metrics: PerformanceMetrics }>
+
 export class PerformanceRunner {
   private logger: LevelLogger;
   private headerConditionals: ConditionalHeaders['conditions'];
   private getHeaders: () => ConditionalHeaders['headers'];
-  private screenshotsObservable: ({ logger, url, conditionalHeaders, layout, browserTimezone, }: ScreenshotObservableOpts) => Rx.Observable<void>;
+  private screenshotsObservable: PluginScreenshotObservable;
 
   public constructor(server, logger: LevelLogger) {
     this.logger = logger;
     this.headerConditionals = getConditionals(server);
-    this.screenshotsObservable = screenshotsObservableFactory(server);
+    this.screenshotsObservable = screenshotsObservableFactory(server) as unknown as PluginScreenshotObservable;
 
     const config = server.config();
     this.getHeaders = (): ConditionalHeaders['headers'] => ({
@@ -54,17 +56,21 @@ export class PerformanceRunner {
         layout,
         browserTimezone: 'UTC',
         logger: this.logger,
-      }).pipe(
-        take(1),
-        concatMap((data: any) => {
-          resolve(data);
-          return data;
-        }),
-        catchError(err => {
-          this.logger.error(err);
-          throw err;
-        })
-      );
+      })
+        .subscribe(
+          ({ metrics }: TestResults): PerformanceMetrics => {
+            resolve(metrics);
+            return metrics;
+          },
+          (err: Error): void => {
+            this.logger.error(err);
+          }
+        );
     });
   }
+}
+
+interface TestResults {
+  screenshots: Screenshot[];
+  metrics: PerformanceMetrics;
 }
