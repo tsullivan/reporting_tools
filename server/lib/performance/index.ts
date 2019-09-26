@@ -7,20 +7,20 @@ export interface PerformanceMetrics {
   timestamp: Date;
   puppeteer: {
     Timestamp: number;
-    Documents: 8;
-    Frames: 4;
-    JSEventListeners: 476;
-    Nodes: 646;
-    LayoutCount: 11;
-    RecalcStyleCount: 167;
-    LayoutDuration: 0.071242;
-    RecalcStyleDuration: 0.048641;
-    ScriptDuration: 0.523818;
-    TaskDuration: 2.138324;
-    JSHeapUsedSize: 127920088;
+    Documents: number;
+    Frames: number;
+    JSEventListeners: number;
+    Nodes: number;
+    LayoutCount: number;
+    RecalcStyleCount: number;
+    LayoutDuration: number; // float
+    RecalcStyleDuration: number; // float
+    ScriptDuration: number; // float
+    TaskDuration: number; // float
+    JSHeapUsedSize: number;
   };
 }
 
-export function getRunner(server, logger: LevelLogger, browserFactory: HeadlessChromiumDriverFactory): PerformanceRunner {
-  return new PerformanceRunner(server, logger, browserFactory);
+export function getRunner(server, logger: LevelLogger): PerformanceRunner {
+  return new PerformanceRunner(server, logger);
 }

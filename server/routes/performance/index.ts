@@ -1,13 +1,11 @@
 import * as Joi from 'joi';
 import { boomify } from 'boom';
 import { Request } from 'hapi';
-import { createBrowserDriverFactory } from '../../../../../x-pack/legacy/plugins/reporting/server/browsers';
 import { LevelLogger } from '../../../../../x-pack/legacy/plugins/reporting/server/lib/level_logger';
 import { getRunner, PerformanceMetrics } from '../../lib/performance';
 
 export async function registerPerformanceTesting(server, logger: LevelLogger): Promise<void> {
-  const browserFactory = await createBrowserDriverFactory(server);
-  const runner = getRunner(server, logger, browserFactory);
+  const runner = getRunner(server, logger);
 
   // get chromium instance
   server.route({

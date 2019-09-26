@@ -5,7 +5,7 @@ import { initPlugin } from './server/init';
 
 export default function(kibana): LegacyPluginSpec {
   return new kibana.Plugin({
-    require: ['elasticsearch'],
+    require: ['elasticsearch', 'reporting'],
     name: 'reporting_tools',
     uiExports: {
       app: {
@@ -22,7 +22,7 @@ export default function(kibana): LegacyPluginSpec {
     config(Joi): void {
       return Joi.object({
         enabled: Joi.boolean().default(true),
-        ingestAuth: Joi.string().default(`Basic ${Buffer.from('elastic:changeme').toString('base64')}`)
+        pageLoadAuth: Joi.string().default(`Basic ${Buffer.from('elastic:changeme').toString('base64')}`)
       }).default();
     },
 
