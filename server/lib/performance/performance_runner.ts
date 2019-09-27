@@ -43,6 +43,7 @@ export class PerformanceRunner {
     this.logger.info('Launching browser...');
 
     return new Promise((resolve): object => {
+      const screenLogger = this.logger.clone(['screenshots']);
       const layout = new PreserveLayout({ width: 1200, height: 900 });
       const headers = this.getHeaders();
       const conditionalHeaders = {
@@ -55,7 +56,7 @@ export class PerformanceRunner {
         conditionalHeaders,
         layout,
         browserTimezone: 'UTC',
-        logger: this.logger,
+        logger: screenLogger,
       })
         .subscribe(
           ({ metrics }: TestResults): PerformanceMetrics => {
@@ -64,6 +65,9 @@ export class PerformanceRunner {
           },
           (err: Error): void => {
             this.logger.error(err);
+          },
+          (): void => {
+            this.logger.info('Test complete.');
           }
         );
     });
